@@ -1,0 +1,35 @@
+name: Instalar Helm Chart en AKS via terraform
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+#Secretos añadidos
+    env:
+      TF_VAR_client_id: ${{ secrets.AZURE_CLIENT_ID }}
+      TF_VAR_subscription_id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      TF_VAR_client_secret: ${{ secrets.AZURE_CLIENT_SECRET }}
+
+    steps:
+#Clona el repo
+    - name: Checkout Code
+      uses: actions/checkout@v2
+#Configura Terraform
+    - name: Set Up Terraform
+      uses: hashicorp/setup-terraform@v1
+#Inicializa terraform
+    - name: Initialize Terraform
+      run: terraform init
+#Aplica la configuración de los archivos de Terraform
+    - name: Apply Terraform Configuration
+      run: terraform apply -auto-approve
+#Configuración de Kubectl a través del Kubeconfig
+    - name: Configure Kubectl
+      uses: azure/k8s-set-context@v1
+      with:
+        method: kubeconfig
+        kubeconfig: ${{ steps.deploy.outputs.kubeconfig }}
