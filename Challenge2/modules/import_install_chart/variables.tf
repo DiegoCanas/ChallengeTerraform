@@ -1,11 +1,5 @@
-#Las explicaciones repetitivas se explicarán solo una vez para no ensuciar el código.
-
-
-#Definimos en este archivo las variables para el modulo reutilizable
 variable "acr_server" {
-#Describimos la variabel acr_server
   description = "Azure Container Registry donde copiamos los Helm charts del reference.azure.io."
-#Se proporciona una cadena
   type        = string 
 # En caso de que se quiera dar un valor constante
 # default     = "instance.azurecr.io"

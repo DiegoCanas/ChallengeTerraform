@@ -25,14 +25,3 @@ spec:
                 - {{ .Values.availabilityZone }}
 
 
-#Al haber añadido el nodeSelector podemos especificar que grupo de pods queremos aislar.
-
-#Usamos podAntiAffinity y requiredDuringSchedulingIgnoredDuringExecution, con esto nos 
-#aseguramos de que si las condiciones mencionadas posteriormente se cumplen en dos pods,
-#no se puedan desplegar en el mismo nodo.
-
-#Kubernetes utilizará el nombre del host para determinar si los pods se pueden programar
-#en el mismo nodo o no.
-
-#Nos aseguramos que los pods se desplieguen en nodos con la etiqueta `topology.kubernetes.io/zone'
-#igual a la definica en el values.yaml.
